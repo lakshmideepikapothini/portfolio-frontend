@@ -1,7 +1,6 @@
 ﻿import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { ReactNode } from "react";
-import api from "../api/api";
 import {
   FaAws,
   FaCode,
@@ -31,13 +30,6 @@ type SkillGroup = {
   icon: ReactNode;
   items: Array<{ name: string; icon: ReactNode; years: number }>;
 };
-
-interface Skill {
-  id: number;
-  skillName: string;
-  category: string;
-  percentage: number;
-}
 
 const formatYears = (years: number) => {
   const roundedYears = Math.floor(years);
@@ -117,25 +109,7 @@ const skillGroups: SkillGroup[] = [
 ];
 
 const Skills = () => {
-  const [skills, setSkills] = useState<Skill[]>([]);
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
-
-  useEffect(() => {
-    api
-      .get("/skills")
-      .then((response) => {
-        setSkills(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
-
-  const grouped = skills.reduce((acc: Record<string, Skill[]>, s) => {
-    if (!acc[s.category]) acc[s.category] = [];
-    acc[s.category].push(s);
-    return acc;
-  }, {} as Record<string, Skill[]>);
 
   return (
     <section id="skills" className="section">
