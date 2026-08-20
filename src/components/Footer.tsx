@@ -24,7 +24,7 @@ const Footer = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await api.post("/contact", formData);
+      await api.post("/api/contact", formData);
       setMessage("✅ Thank you! Your message has been sent.");
       setFormData({
         firstName: "",
